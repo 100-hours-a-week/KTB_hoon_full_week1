@@ -10,7 +10,6 @@ import enums.Genre;
 import enums.SeriesType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
@@ -75,10 +74,15 @@ public class InputView {
     public static SeriesType readSeriesType() {
         System.out.println();
         System.out.println("─── 시리즈 종류 선택 ───");
-        System.out.println("  [1] 오리지널");
-        System.out.println("  [2] 라이센스");
+        SeriesType[] seriesTypes = SeriesType.values();
+        for (SeriesType seriesType : seriesTypes) {
+            System.out.printf("  [%d] %s%n", seriesType.getCode(), seriesType.getLabel());
+        }
         int choice = readNumber("선택");
-        return choice == 1 ? SeriesType.ORIGINAL : SeriesType.LICENSE;
+        if (choice < 1 || choice > seriesTypes.length) {
+            throw new IllegalArgumentException("잘못된 장르입니다");
+        }
+        return SeriesType.fromCode(choice);
     }
 
     private static Genre readGenre() {
@@ -131,10 +135,12 @@ public class InputView {
     }
 
     private static int readInt() {
-        try {
-            return Integer.parseInt(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            return -1;
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("0 이상 정수로 입력해주세요");
+            }
         }
     }
 }

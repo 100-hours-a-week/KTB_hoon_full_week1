@@ -13,7 +13,7 @@ public abstract class Content {
     protected Integer runningTime;
     protected String description;
 
-    public Content(String name, Genre genre, AgeRating ageRating, Integer runningTime,
+    protected Content(String name, Genre genre, AgeRating ageRating, Integer runningTime,
             String description) {
         this.id = ContentIdGenerator.generateId();
         this.name = name;
@@ -22,9 +22,6 @@ public abstract class Content {
         this.runningTime = runningTime;
         this.description = description;
     }
-
-    public abstract void play();
-    public abstract void stop();
 
     public int getId() {
         return id;

@@ -43,14 +43,14 @@ public class OutputView {
 
     // 헤더 출력
     private static void printContentTableHeader() {
-        System.out.println("┌─────┬─────┬────────────────────────┬────────────┬────────┐");
-        System.out.printf("│ %-3s │ %-3s │ %-22s │ %-10s │ %-6s │%n", "No.", "ID", "Title", "Genre", "Rating");
-        System.out.println("├─────┼─────┼────────────────────────┼────────────┼────────┤");
+        System.out.println("┌─────┬─────┬────────────────────────┬────────────┐");
+        System.out.printf("│ %-3s │ %-3s │ %-22s │ %-10s │%n", "No.", "ID", "Title", "Genre");
+        System.out.println("├─────┼─────┼────────────────────────┼────────────┤");
     }
 
     // 푸터 출력
     private static void printContentTableFooter() {
-        System.out.println("└─────┴─────┴────────────────────────┴────────────┴────────┘");
+        System.out.println("└─────┴─────┴────────────────────────┴────────────┘");
     }
 
     // 개별 row 출력 (No. 포함)
@@ -89,7 +89,9 @@ public class OutputView {
     }
 
     private static String truncate(String s, int maxLength) {
-        if (s.length() <= maxLength) return s;
+        if (s.length() <= maxLength) {
+            return s;
+        }
         return s.substring(0, maxLength - 3) + "...";
     }
 }

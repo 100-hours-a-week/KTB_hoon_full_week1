@@ -26,9 +26,8 @@ public class Main {
                     break;
                 case 2:
                     int contentId = InputView.selectContentId();
-                    Content content = service.handlePlayContent(contentId);
+                    Content content = service.getContent(contentId);
                     OutputView.printContent(content);
-                    // 재생할 컨텐츠 출력
                     break;
                 case 3:
                     ContentTypeOption option = InputView.readContentType();

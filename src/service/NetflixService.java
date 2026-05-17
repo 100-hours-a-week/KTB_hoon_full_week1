@@ -24,10 +24,8 @@ public class NetflixService {
         return contentRepository.getAll();
     }
 
-    public Content handlePlayContent(int contentId){
-        Content content = getContentOrThrow(contentId);
-        content.play();
-        return content;
+    public Content getContent(int contentId) {
+        return getContentOrThrow(contentId);
     }
 
     public void addOriginalMovie(OriginalMovieAddReqDto dto) {
