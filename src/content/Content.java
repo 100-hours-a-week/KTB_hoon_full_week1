@@ -38,12 +38,4 @@ public abstract class Content {
     public AgeRating getAgeRating() {
         return ageRating;
     }
-
-    protected void printCommonInfo() {
-        System.out.println("제목: " + name);
-        System.out.println("장르: " + genre.getLabel());
-        System.out.println("등급: " + ageRating.getLabel());
-        System.out.println("러닝타임: " + runningTime + "분");
-        System.out.println("줄거리: " + description);
-    }
 }
