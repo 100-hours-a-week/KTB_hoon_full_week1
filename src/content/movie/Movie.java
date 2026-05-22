@@ -13,11 +13,17 @@ public class Movie extends Content {
             String name,
             Genre genre,
             AgeRating ageRating,
-            Integer runningTime,
+            int runningTime,
             String description,
             int releaseYear,
             String distributor) {
         super(name, genre, ageRating, runningTime, description);
+        if (releaseYear < 1900) {
+            throw new IllegalArgumentException("Release year must be greater than 1900");
+        }
+        if (distributor == null) {
+            throw new IllegalArgumentException("Distributor cannot be null");
+        }
         this.releaseYear = releaseYear;
         this.distributor = distributor;
     }

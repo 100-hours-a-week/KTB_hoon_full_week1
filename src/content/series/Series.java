@@ -21,6 +21,15 @@ public class Series extends Content {
             int episodeNumber,
             SeriesType seriesType) {
         super(name, genre, ageRating, runningTime, description);
+        if(seasonNumber < 0) {
+            throw new IllegalArgumentException("The season number cannot be negative");
+        }
+        if(episodeNumber < 0) {
+            throw new IllegalArgumentException("The episode number cannot be negative");
+        }
+        if(seriesType == null) {
+            throw new IllegalArgumentException("The series type cannot be null");
+        }
         this.seasonNumber = seasonNumber;
         this.episodeNumber = episodeNumber;
         this.seriesType = seriesType;

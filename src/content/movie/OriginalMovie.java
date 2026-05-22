@@ -11,7 +11,7 @@ public class OriginalMovie extends Movie {
             String name,
             Genre genre,
             AgeRating ageRating,
-            Integer runningTime,
+            int runningTime,
             String description,
             int releaseYear,
             String distributor,

@@ -16,6 +16,18 @@ public abstract class Content {
     protected Content(String name, Genre genre, AgeRating ageRating, Integer runningTime,
             String description) {
         this.id = ContentIdGenerator.generateId();
+        if(name == null || name.isEmpty() || name.isBlank()){
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if(genre == null){
+            throw new IllegalArgumentException("Genre cannot be null");
+        }
+        if(ageRating == null){
+            throw new IllegalArgumentException("AgeRating cannot be null");
+        }
+        if(runningTime < 0){
+            throw new IllegalArgumentException("RunningTime cannot be under 0");
+        }
         this.name = name;
         this.genre = genre;
         this.ageRating = ageRating;
@@ -37,5 +49,13 @@ public abstract class Content {
 
     public AgeRating getAgeRating() {
         return ageRating;
+    }
+
+    public int getRunningTime() {
+        return runningTime;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

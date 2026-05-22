@@ -13,13 +13,19 @@ public class LicenseMovie extends Movie {
             String name,
             Genre genre,
             AgeRating ageRating,
-            Integer runningTime,
+            int runningTime,
             String description,
             int releaseYear,
             String distributor,
             LocalDate licenseStartDate,
             LocalDate licenseEndDate) {
         super(name, genre, ageRating, runningTime, description, releaseYear, distributor);
+        if(licenseStartDate == null || licenseEndDate == null){
+            throw new IllegalArgumentException("License start date and end dates cannot be null");
+        }
+        if(licenseStartDate.isAfter(licenseEndDate)){
+            throw new IllegalArgumentException("License start date cannot be after license end date");
+        }
         this.licenseStartDate = licenseStartDate;
         this.licenseEndDate = licenseEndDate;
     }
