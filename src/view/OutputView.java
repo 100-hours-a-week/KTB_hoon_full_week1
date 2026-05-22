@@ -1,6 +1,7 @@
 package view;
 
 import content.Content;
+import enums.menu.MenuOption;
 import java.util.List;
 
 public class OutputView {
@@ -81,10 +82,10 @@ public class OutputView {
     private static void printMenu() {
         System.out.println();
         System.out.println("─────────────── MENU ───────────────");
-        System.out.println("  [1] 컨텐츠 출력");
-        System.out.println("  [2] 컨텐츠 조회");
-        System.out.println("  [3] 컨텐츠 추가");
-        System.out.println("  [0] 종료");
+        MenuOption[] options = MenuOption.values();
+        for (MenuOption option : options) {
+            System.out.printf("  [%d] %s%n", option.getCode(), option.getLabel());
+        }
         System.out.println("─────────────────────────────────────");
     }
 

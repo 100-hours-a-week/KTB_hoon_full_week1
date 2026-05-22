@@ -1,6 +1,7 @@
 import content.Content;
 import dto.ContentAddReqDto;
 import enums.ContentTypeOption;
+import enums.menu.MenuOption;
 import exception.ContentNotFoundException;
 import java.util.List;
 import repository.ContentRepository;
@@ -15,26 +16,15 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            try {
-                OutputView.printMainScreen();
-                int menu = InputView.readMenu();
-                if (menu == 0) {
-                    OutputView.printGoodbye();
-                    return;
-                }
-                handleMenu(menu);
-            } catch (Exception e) {
-                OutputView.printMessage(e.getMessage());
+            OutputView.printMainScreen();
+            MenuOption menu = MenuOption.fromCode(InputView.readMenu());
+            switch (menu) {
+                case VIEW_CONTENTS: handleContentList();   break;
+                case VIEW_CONTENT_INFO: handleContentDetail(); break;
+                case ADD_CONTENTS: handleAddContent();    break;
+                case EXIT: OutputView.printGoodbye(); return;
+                default: OutputView.printInvalidMenuNumber();
             }
-        }
-    }
-
-    private static void handleMenu(int menu) {
-        switch (menu) {
-            case 1: handleContentList();   break;
-            case 2: handleContentDetail(); break;
-            case 3: handleAddContent();    break;
-            default: OutputView.printInvalidMenuNumber();
         }
     }
 
@@ -51,10 +41,6 @@ public class Main {
 
     private static void handleAddContent() {
         ContentTypeOption option = InputView.readContentType();
-        if (option == null) {
-            OutputView.printMessage("취소되었습니다");
-            return;
-        }
         ContentAddReqDto contentAddRequest = InputView.readContentInfo();
         switch (option) {
             case ORIGINAL_MOVIE:
@@ -65,6 +51,9 @@ public class Main {
                 break;
             case SERIES:
                 service.addSeries(InputView.readSeriesInfo(contentAddRequest));
+                break;
+            case CANCEL:
+                OutputView.printMessage("취소되었습니다");
                 break;
         }
     }

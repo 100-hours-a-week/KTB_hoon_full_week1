@@ -34,9 +34,6 @@ public class InputView {
             }
             System.out.println("  [0] 취소");
             int choice = readPositiveIntAllowZero("선택");
-            if (choice == 0) {
-                return null;
-            }
             try {
                 return ContentTypeOption.fromCode(choice);
             } catch (IllegalArgumentException e) {
@@ -97,7 +94,7 @@ public class InputView {
             System.out.println();
             System.out.println("─── 장르 선택 ───");
             for (Genre genre : Genre.values()) {
-                System.out.printf("  [%d] %s%n", genre.getCode(), genre);
+                System.out.printf("  [%d] %s%n", genre.getCode(), genre.getLabel());
             }
             int choice = readPositiveInt("선택");
             try {
