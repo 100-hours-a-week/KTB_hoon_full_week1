@@ -3,12 +3,11 @@ package content.movie;
 import content.Content;
 import enums.AgeRating;
 import enums.Genre;
-import java.util.List;
 
 public class Movie extends Content {
 
-    private int releaseYear;
-    private String distributor;
+    private final int releaseYear;
+    private final String distributor;
 
     protected Movie(
             String name,

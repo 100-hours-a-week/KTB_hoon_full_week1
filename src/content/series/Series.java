@@ -7,9 +7,9 @@ import enums.SeriesType;
 
 public class Series extends Content {
 
-    private int seasonNumber;
-    private int episodeNumber;
-    private SeriesType seriesType;
+    private final int seasonNumber;
+    private final int episodeNumber;
+    private final SeriesType seriesType;
 
     public Series(
             String name,

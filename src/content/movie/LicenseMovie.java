@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 public class LicenseMovie extends Movie {
 
-    private LocalDate licenseStartDate;
-    private LocalDate licenseEndDate;
+    private final LocalDate licenseStartDate;
+    private final LocalDate licenseEndDate;
 
     public LicenseMovie(
             String name,

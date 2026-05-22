@@ -19,12 +19,12 @@ public class InputView {
 
     public static int readMenu() {
         System.out.print("선택 >> ");
-        return readInt();
+        return readPositiveInt();
     }
 
     public static int selectContentId() {
         System.out.print("컨텐츠 ID >> ");
-        return readInt();
+        return readPositiveInt();
     }
 
     public static ContentTypeOption readContentType() {
@@ -126,7 +126,7 @@ public class InputView {
 
     private static int readNumber(String prompt) {
         System.out.print(prompt + " >> ");
-        return readInt();
+        return readPositiveInt();
     }
 
     private static String readString(String prompt) {
@@ -134,7 +134,7 @@ public class InputView {
         return scanner.nextLine().trim();
     }
 
-    private static int readInt() {
+    private static int readPositiveInt() {
         while (true) {
             try {
                 return Integer.parseInt(scanner.nextLine().trim());

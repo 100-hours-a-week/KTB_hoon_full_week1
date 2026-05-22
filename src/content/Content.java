@@ -6,12 +6,12 @@ import utils.ContentIdGenerator;
 
 public abstract class Content {
 
-    protected final int id;
-    protected String name;
-    protected Genre genre;
-    protected AgeRating ageRating;
-    protected Integer runningTime;
-    protected String description;
+    private final int id;
+    private final String name;
+    private final Genre genre;
+    private final AgeRating ageRating;
+    private final int runningTime;
+    private final String description;
 
     protected Content(String name, Genre genre, AgeRating ageRating, Integer runningTime,
             String description) {

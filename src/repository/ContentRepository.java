@@ -16,7 +16,7 @@ public class ContentRepository {
     }
 
     public Optional<Content> get(int id) {
-        return Optional.of(contents.get(id));
+        return Optional.ofNullable(contents.get(id));
     }
 
     public List<Content> getAll() {

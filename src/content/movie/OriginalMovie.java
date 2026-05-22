@@ -5,7 +5,7 @@ import enums.Genre;
 import java.time.LocalDate;
 public class OriginalMovie extends Movie {
 
-    private LocalDate releaseDate;
+    private final LocalDate releaseDate;
 
     public OriginalMovie(
             String name,
