@@ -23,12 +23,8 @@ public class Main {
                     return;
                 }
                 handleMenu(menu);
-            } catch (ContentNotFoundException e) {
-                OutputView.printMessage("콘텐츠를 찾을 수 없습니다: " + e.getMessage());
-            } catch (IllegalArgumentException e) {
-                OutputView.printMessage("잘못된 입력입니다: " + e.getMessage());
             } catch (Exception e) {
-                OutputView.printMessage("알 수 없는 오류가 발생했습니다: " + e.getMessage());
+                OutputView.printMessage(e.getMessage());
             }
         }
     }

@@ -10,54 +10,59 @@ import enums.Genre;
 import enums.SeriesType;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import validator.InputValidator;
 
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static int readMenu() {
-        System.out.print("선택 >> ");
-        return readPositiveInt();
+        return readPositiveInt("선택");
     }
 
     public static int selectContentId() {
-        System.out.print("컨텐츠 ID >> ");
-        return readPositiveInt();
+        return readPositiveInt("컨텐츠 ID");
     }
 
     public static ContentTypeOption readContentType() {
-        System.out.println();
-        System.out.println("─── 컨텐츠 종류 선택 ───");
-        for (ContentTypeOption type : ContentTypeOption.values()) {
-            System.out.printf("  [%d] %s%n", type.getCode(), type.getLabel());
+        while (true) {
+            System.out.println();
+            System.out.println("─── 컨텐츠 종류 선택 ───");
+            for (ContentTypeOption type : ContentTypeOption.values()) {
+                System.out.printf("  [%d] %s%n", type.getCode(), type.getLabel());
+            }
+            System.out.println("  [0] 취소");
+            int choice = readPositiveIntAllowZero("선택");
+            if (choice == 0) {
+                return null;
+            }
+            try {
+                return ContentTypeOption.fromCode(choice);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
-        System.out.println("  [0] 취소");
-        int choice = readNumber("선택");
-        if (choice == 0) {
-            return null;
-        }
-        return ContentTypeOption.fromCode(choice);
     }
 
     public static ContentAddReqDto readContentInfo() {
         String name = readString("제목");
         Genre genre = readGenre();
         AgeRating ageRating = readAgeRating();
-        Integer runningTime = readNumber("재생 시간 (분)");
+        int runningTime = readPositiveInt("재생 시간 (분)");
         String description = readString("설명");
         return new ContentAddReqDto(name, genre, ageRating, runningTime, description);
     }
 
     public static OriginalMovieAddReqDto readOriginalMovieInfo(ContentAddReqDto contentInfo) {
-        int releaseYear = readNumber("개봉 연도");
+        int releaseYear = readPositiveInt("개봉 연도");
         String distributor = readString("배급사");
         LocalDate releaseDate = readDate("릴리즈 날짜/시간");
         return new OriginalMovieAddReqDto(contentInfo, releaseYear, distributor, releaseDate);
     }
+
     public static LicensedMovieAddReqDto readLicensedMovieInfo(ContentAddReqDto contentInfo) {
-        int releaseYear = readNumber("개봉 연도");
+        int releaseYear = readPositiveInt("개봉 연도");
         String distributor = readString("배급사");
         LocalDate startDate = readDate("라이센스 시작일");
         LocalDate endDate = readDate("라이센스 종료일");
@@ -65,81 +70,115 @@ public class InputView {
     }
 
     public static SeriesAddReqDto readSeriesInfo(ContentAddReqDto contentInfo) {
-        int seasonNumber = readNumber("시즌 수");
-        int episodeNumber = readNumber("총 에피소드 수");
+        int seasonNumber = readPositiveInt("시즌 수");
+        int episodeNumber = readPositiveInt("총 에피소드 수");
         SeriesType seriesType = readSeriesType();
         return new SeriesAddReqDto(contentInfo, seasonNumber, episodeNumber, seriesType);
     }
 
-    public static SeriesType readSeriesType() {
-        System.out.println();
-        System.out.println("─── 시리즈 종류 선택 ───");
-        SeriesType[] seriesTypes = SeriesType.values();
-        for (SeriesType seriesType : seriesTypes) {
-            System.out.printf("  [%d] %s%n", seriesType.getCode(), seriesType.getLabel());
-        }
-        int choice = readNumber("선택");
-        if (choice < 1 || choice > seriesTypes.length) {
-            throw new IllegalArgumentException("잘못된 장르입니다");
-        }
-        return SeriesType.fromCode(choice);
-    }
-
-    private static Genre readGenre() {
-        System.out.println();
-        System.out.println("─── 장르 선택 ───");
-        Genre[] genres = Genre.values();
-        for (Genre genre : genres) {
-            System.out.printf("  [%d] %s%n", genre.getCode(), genre);
-        }
-        int choice = readNumber("선택");
-        if (choice < 1 || choice > genres.length) {
-            throw new IllegalArgumentException("잘못된 장르입니다");
-        }
-        return Genre.fromCode(choice);
-    }
-
-    private static AgeRating readAgeRating() {
-        System.out.println();
-        System.out.println("─── 시청 등급 선택 ───");
-        AgeRating[] ratings = AgeRating.values();
-        for (AgeRating rating : ratings) {
-            System.out.printf("  [%d] %s%n", rating.getCode(), rating.getMinAge());
-        }
-        int choice = readNumber("선택");
-        if (choice < 1 || choice > ratings.length) {
-            throw new IllegalArgumentException("잘못된 등급입니다");
-        }
-        return AgeRating.fromCode(choice);
-    }
-
-    private static LocalDate readDate(String prompt) {
+    private static SeriesType readSeriesType() {
         while (true) {
-            String input = readString(prompt + " (yyyy-MM-dd)");
+            System.out.println();
+            System.out.println("─── 시리즈 종류 선택 ───");
+            for (SeriesType seriesType : SeriesType.values()) {
+                System.out.printf("  [%d] %s%n", seriesType.getCode(), seriesType.getLabel());
+            }
+            int choice = readPositiveInt("선택");
             try {
-                return LocalDate.parse(input);
-            } catch (DateTimeParseException e) {
-                System.out.println("날짜 형식이 잘못되었습니다. yyyy-MM-dd 형식으로 입력하세요");
+                return SeriesType.fromCode(choice);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
-    private static int readNumber(String prompt) {
-        System.out.print(prompt + " >> ");
-        return readPositiveInt();
+    private static Genre readGenre() {
+        while (true) {
+            System.out.println();
+            System.out.println("─── 장르 선택 ───");
+            for (Genre genre : Genre.values()) {
+                System.out.printf("  [%d] %s%n", genre.getCode(), genre);
+            }
+            int choice = readPositiveInt("선택");
+            try {
+                return Genre.fromCode(choice);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private static AgeRating readAgeRating() {
+        while (true) {
+            System.out.println();
+            System.out.println("─── 시청 등급 선택 ───");
+            for (AgeRating rating : AgeRating.values()) {
+                System.out.printf("  [%d] %s%n", rating.getCode(), rating.getMinAge());
+            }
+            int choice = readPositiveInt("선택");
+            try {
+                return AgeRating.fromCode(choice);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private static LocalDate readDate(String prompt) {
+        while (true) {
+            System.out.print(prompt + " >> ");
+            String input = scanner.nextLine().trim();
+            try {
+                InputValidator.validateDate(input, prompt);
+                return LocalDate.parse(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     private static String readString(String prompt) {
-        System.out.print(prompt + " >> ");
-        return scanner.nextLine().trim();
+        while (true) {
+            System.out.print(prompt + " >> ");
+            String line = scanner.nextLine().trim();
+            try {
+                InputValidator.validateNotBlank(line, prompt);
+                return line;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    private static int readPositiveInt() {
+    private static int readPositiveInt(String prompt) {
         while (true) {
+            System.out.print(prompt + " >> ");
+            String line = scanner.nextLine().trim();
             try {
-                return Integer.parseInt(scanner.nextLine().trim());
+                int input = Integer.parseInt(line);
+                InputValidator.validatePositive(input, prompt);
+                return input;
             } catch (NumberFormatException e) {
-                System.out.println("0 이상 정수로 입력해주세요");
+                System.out.println(prompt + "은(는) 숫자여야 합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private static int readPositiveIntAllowZero(String prompt) {
+        while (true) {
+            System.out.print(prompt + " >> ");
+            String line = scanner.nextLine().trim();
+            try {
+                int input = Integer.parseInt(line);
+                if (input < 0) {
+                    System.out.println(prompt + "은(는) 0 이상이어야 합니다.");
+                    continue;
+                }
+                return input;
+            } catch (NumberFormatException e) {
+                System.out.println(prompt + "은(는) 숫자여야 합니다.");
             }
         }
     }

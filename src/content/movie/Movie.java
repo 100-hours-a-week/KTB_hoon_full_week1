@@ -18,8 +18,8 @@ public class Movie extends Content {
             int releaseYear,
             String distributor) {
         super(name, genre, ageRating, runningTime, description);
-        if (releaseYear < 1900) {
-            throw new IllegalArgumentException("Release year must be greater than 1900");
+        if (releaseYear < 0) {
+            throw new IllegalArgumentException("Release year must be greater than 0");
         }
         if (distributor == null) {
             throw new IllegalArgumentException("Distributor cannot be null");
